@@ -2,9 +2,19 @@ from PyInquirer import prompt
 import csv
 from csv import DictWriter
 
-headersCSV = ['amount','label','spender']      
+headersCSV = ['amount','label','spender','involvedUsers']
 
+involvedUserListChoice=[]
 usersList = []
+
+
+
+def addSpenderToInvolved(spender):
+    index = 0
+    while involvedUserListChoice[index][1] != spender:
+        index += 1
+    involvedUserListChoice[index].append({"checked": True})
+
 expense_questions = [
     {
         "type":"input",
@@ -20,23 +30,37 @@ expense_questions = [
         "type":"rawlist",
         "name":"spender",
         "message":"New Expense - Spender: ",
-        "choices": usersList
+        "choices": usersList,
     },
-
+    {
+        "type":"checkbox",
+        "message":"Select users involved",
+        "name":"involvedUsers",
+        "choices":involvedUserListChoice,
+    },
+    
 ]
+
+# answers = prompt(expense_questions)
+
+
 
 def get_user(filename):
     file = open(filename)
     csvreader = csv.reader(file)
     for row in csvreader:
         usersList.append(row[0])
-    print(usersList)
     file.close()
+
+def builUserInvoledListChoices():
+    for elm in usersList:
+        involvedUserListChoice.append({"name": elm})
 
 def new_expense(*args):
     expensefilename = 'data/expense.csv'
     usersfilename = 'data/users.csv'
     get_user(usersfilename)
+    builUserInvoledListChoices()
     infos = prompt(expense_questions)
     with open(expensefilename, 'a', newline='') as f_object:
             dictwriter_object = DictWriter(f_object, fieldnames=headersCSV)

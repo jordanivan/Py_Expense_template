@@ -1,5 +1,7 @@
-amount,label,spender
+amount,label,spender,involvedUsers
 10,Eric,R
 12,Tomate,John
-,,
-333,Yoga,Kyle
+
+455,Barbecue,SIGL,"['SIGL', 'Kyle']"
+,,,
+543,Ouio,PChojka,[]
