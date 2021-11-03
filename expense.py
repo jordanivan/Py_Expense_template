@@ -26,7 +26,7 @@ expense_questions = [
 
 def new_expense(*args):
     infos = prompt(expense_questions)
-    with open('expense.csv', 'a', newline='') as f_object:
+    with open('data/expense.csv', 'a', newline='') as f_object:
             dictwriter_object = DictWriter(f_object, fieldnames=headersCSV)
             dictwriter_object.writerow(infos)            
 
